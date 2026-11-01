@@ -25,6 +25,8 @@ jobs:
         run: python3 scripts/install_brand_assets.py --app user
       - name: Verify original artwork integrity
         run: python3 scripts/install_brand_assets.py --app user --verify-only
+      - name: Install Flutter dependencies
+        run: flutter pub get
       - name: Generate branded Android launcher icons
         run: dart run flutter_launcher_icons
       - name: Analyze Flutter app
