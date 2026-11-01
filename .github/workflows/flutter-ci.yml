@@ -1,0 +1,31 @@
+name: ID-CASH Flutter CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - feature/flutter-onboarding-api-foundation
+
+permissions:
+  contents: read
+
+jobs:
+  analyze-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate standard Android scaffolding
+        run: flutter create . --platforms=android --project-name=id_cash_user_app
+      - name: Install Flutter dependencies
+        run: flutter pub get
+      - name: Analyze Flutter app
+        run: flutter analyze
+      - name: Run Flutter widget tests
+        run: flutter test
+      - name: Compile Android debug APK
+        run: flutter build apk --debug --dart-define=IDC_API_BASE_URL=https://idcash.example.invalid
