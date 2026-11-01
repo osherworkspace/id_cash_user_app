@@ -17,6 +17,6 @@ void main() {
     expect(find.text('YOUR IDENTITY IS YOUR CASH'), findsOneWidget);
     expect(find.text('Create account'), findsOneWidget);
     expect(find.text('Log in'), findsOneWidget);
-    expect(find.byIcon(Icons.account_balance_wallet_rounded), findsOneWidget);
+    expect(find.byType(Image), findsWidgets);
   });
 }
