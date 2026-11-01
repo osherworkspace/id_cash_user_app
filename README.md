@@ -37,3 +37,7 @@ The source uses the real uploaded ID-CASH slide art and app icon, not placeholde
 On the next CI run, `python3 scripts/install_brand_assets.py --app user` automatically extracts the original PNGs, verifies the exact SHA-256 signatures, then `flutter_launcher_icons` generates the branded Android launcher icons. The release/build job **fails rather than substituting placeholders** if the ZIP is missing or any image is changed. It does not rely on image-generation placeholders.
 
 To install locally, put the same ZIP in the project root and run `python3 scripts/install_brand_assets.py --app user` before `flutter pub get` and your Flutter build.
+
+## Current uploaded original artwork
+
+The original `ID-CASH_User_App_Images.zip` is already present in this branch's root. Its archive entries are flat PNG filenames. CI now unpacks this existing upload with `python3 scripts/install_brand_assets.py --app user`, verifies the uploaded images against pinned SHA-256 hashes and generates Android launcher icons. **No additional image upload or archive rename is necessary.**
