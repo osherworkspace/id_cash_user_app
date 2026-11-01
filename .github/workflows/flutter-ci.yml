@@ -21,6 +21,14 @@ jobs:
           cache: true
       - name: Generate standard Android scaffolding
         run: flutter create . --platforms=android --project-name=id_cash_user_app
+      - name: Prepare CI-only placeholder onboarding images
+        run: |
+          mkdir -p assets/images
+          for name in onboarding_face onboarding_idc onboarding_send onboarding_services app_icon brand_logo; do
+            if [ ! -f "assets/images/${name}.png" ]; then
+              printf '%s' 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9UeZRRoAAAAASUVORK5CYII=' | base64 -d > "assets/images/${name}.png"
+            fi
+          done
       - name: Install Flutter dependencies
         run: flutter pub get
       - name: Analyze Flutter app
