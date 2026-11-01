@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'services/idcash_api.dart';
 import 'first_launch.dart';
+import 'review/customer_review_dashboard.dart';
 
 const royalBlue = Color(0xFF073B67);
 const cyanBlue = Color(0xFF76BED2);
@@ -55,6 +56,14 @@ class WelcomeScreen extends StatelessWidget {
             OutlinedButton(onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (_) => LoginScreen(api: api))),
               child: const Text('Log in')),
+            const SizedBox(height: 20),
+            const Text('Review mode', textAlign: TextAlign.center,
+              style: TextStyle(color: royalBlue, fontWeight: FontWeight.bold)),
+            const Text('Try the interface with simulations — no money moves.',
+              textAlign: TextAlign.center),
+            TextButton(onPressed: () => Navigator.push(context,
+              MaterialPageRoute(builder: (_) => const CustomerReviewDashboard(
+                restricted: false))), child: const Text('Explore demo dashboard')),
           ],
         ),
       ),
@@ -216,29 +225,23 @@ class RestrictedHome extends StatelessWidget {
   const RestrictedHome({super.key, required this.customer});
   final Map<String, dynamic> customer;
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('ID-CASH')),
-    body: Padding(padding: const EdgeInsets.all(24), child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const Card(child: Padding(padding: EdgeInsets.all(20), child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Wallet balance', style: TextStyle(color: royalBlue)),
-            SizedBox(height: 10),
-            Text('₦0.00', style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold)),
-          ]))),
-        const SizedBox(height: 20),
-        const ListTile(
-          leading: Icon(Icons.verified_user_outlined, color: royalBlue),
-          title: Text('Verification required'),
-          subtitle: Text('Complete NIN/BVN and facial verification to activate your wallet.'),
-        ),
-        const SizedBox(height: 10),
-        const FilledButton(onPressed: null, child: Text('Complete identity verification — coming next')),
-        const SizedBox(height: 12),
-        const Text('Transfers, withdrawals and bill payments are unavailable until account activation.',
-          textAlign: TextAlign.center),
-      ],
-    )),
+  Widget build(BuildContext context) => CustomerReviewDashboard(
+    restricted: true,
+    idcNumber: customer['idcNumber']?.toString(),
+    phoneNumber: customer['phoneNumber']?.toString(),
+    onExit: () => Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const WelcomeScreenPlaceholder()),
+      (route) => false,
+    ),
   );
+}
+
+/// A stable return target when leaving the restricted review session.
+class WelcomeScreenPlaceholder extends StatelessWidget {
+  const WelcomeScreenPlaceholder({super.key});
+  @override
+  Widget build(BuildContext context) {
+    const baseUrl = String.fromEnvironment('IDC_API_BASE_URL');
+    return WelcomeScreen(api: IdcashApi(baseUrl: baseUrl));
+  }
 }
