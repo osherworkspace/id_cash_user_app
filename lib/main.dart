@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'services/idcash_api.dart';
+import 'first_launch.dart';
 
 const royalBlue = Color(0xFF073B67);
 const cyanBlue = Color(0xFF76BED2);
@@ -25,7 +26,7 @@ class IdcashApp extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     ),
-    home: WelcomeScreen(api: api),
+    home: FirstLaunchGate(api: api),
   );
 }
 
@@ -41,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(Icons.account_balance_wallet_rounded, size: 86, color: royalBlue),
+            Image.asset('assets/images/app_icon.png', height: 112, width: 112, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const Icon(Icons.account_balance_wallet_rounded, size: 86, color: royalBlue)),
             const SizedBox(height: 20),
             const Text('ID-CASH', textAlign: TextAlign.center,
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: royalBlue)),

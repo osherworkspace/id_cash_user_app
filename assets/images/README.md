@@ -1,0 +1,1 @@
+Place the original PNG artwork from the supplied ID-CASH onboarding ZIP in this folder before building a branded application. CI uses temporary transparent placeholder PNGs only for compile verification.\n

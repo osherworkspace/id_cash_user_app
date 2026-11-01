@@ -21,8 +21,14 @@ jobs:
           cache: true
       - name: Generate standard Android scaffolding
         run: flutter create . --platforms=android --project-name=id_cash_user_app
+      - name: Install exact uploaded ID-CASH artwork
+        run: python3 scripts/install_brand_assets.py --app user
+      - name: Verify original artwork integrity
+        run: python3 scripts/install_brand_assets.py --app user --verify-only
       - name: Install Flutter dependencies
         run: flutter pub get
+      - name: Generate branded Android launcher icons
+        run: dart run flutter_launcher_icons
       - name: Analyze Flutter app
         run: flutter analyze
       - name: Run Flutter widget tests
