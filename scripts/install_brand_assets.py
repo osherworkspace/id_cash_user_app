@@ -38,7 +38,7 @@ def verify(file: str, data: bytes, expected_hash: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--app", required=True, choices=("user", "agent"))
-    parser.add_argument("--archive", default="idcash_onboarding_assets.zip")
+    parser.add_argument("--archive", default="ID-CASH_User_App_Images.zip")
     parser.add_argument("--verify-only", action="store_true")
     args = parser.parse_args()
     dest = Path("assets/images")
@@ -56,7 +56,7 @@ def main() -> None:
         )
     with ZipFile(archive) as z:
         for name, sha in FILES[args.app].items():
-            source = f"idcash_onboarding_assets/{args.app}/assets/images/{name}"
+            source = name
             data = z.read(source)
             verify(source, data, sha)
             dest.mkdir(parents=True, exist_ok=True)
