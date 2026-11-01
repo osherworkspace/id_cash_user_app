@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'services/idcash_api.dart';
+import 'first_launch.dart';
 
 const royalBlue = Color(0xFF073B67);
 const cyanBlue = Color(0xFF76BED2);
@@ -25,7 +26,7 @@ class IdcashApp extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     ),
-    home: WelcomeScreen(api: api),
+    home: FirstLaunchGate(api: api),
   );
 }
 
