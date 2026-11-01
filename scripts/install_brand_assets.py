@@ -30,7 +30,7 @@ FILES = {
 }
 
 def verify(file: str, data: bytes, expected_hash: str) -> None:
-    if not data.startswith(b"\\x89PNG\\r\\n\\x1a\\n"):
+    if not data.startswith(b"\x89PNG\r\n\x1a\n"):
         raise ValueError(f"{file}: not a PNG")
     if hashlib.sha256(data).hexdigest() != expected_hash:
         raise ValueError(f"{file}: not the original supplied artwork")
